@@ -39,6 +39,10 @@ jobs:
         working-directory: ffmpeg-windows-build-helpers
         run: echo "::set-output name=git-sha::$(git rev-parse --short HEAD)"
         
+      - name: Apply patches
+        working-directory: ffmpeg-source
+        run: git apply $GITHUB_WORKSPACE/ffmpeg-patches/*.patch
+        
       - name: Move ffmpeg-windows-build-helpers
         run: mv -v ./ffmpeg-windows-build-helpers/* ./
         
