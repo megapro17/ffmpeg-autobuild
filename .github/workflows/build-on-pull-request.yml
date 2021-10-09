@@ -2,7 +2,7 @@ name: Build FFmpeg on pull request
 on:
   pull_request_target:
     branches:
-      - main
+      - master
     paths-ignore:
       - README.md
       - .github/dependabot.yml
