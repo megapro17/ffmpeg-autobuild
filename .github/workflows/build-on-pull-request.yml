@@ -87,7 +87,7 @@ jobs:
       
   archive:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [win64, win32]
@@ -122,7 +122,7 @@ jobs:
           
   release:
     needs: [build, archive]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download FFmpeg archive win64
         uses: actions/download-artifact@v2
@@ -146,5 +146,3 @@ jobs:
           files: |
             ffmpeg-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win64-nonfree.zip
             ffmpeg-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win32-nonfree.zip
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
