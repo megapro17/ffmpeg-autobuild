@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        os: [win64, win32]
+        os: [win64]
         
     steps:
       - name: Checkout
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [win64, win32]
+        os: [win64]
         
     steps:
       - name: Download FFmpeg ${{ matrix.os }} nonfree
@@ -127,11 +127,6 @@ jobs:
         with:
           name: ffmpeg-archive-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win64-nonfree
           
-      - name: Download FFmpeg archive win32
-        uses: actions/download-artifact@v2
-        with:
-          name: ffmpeg-archive-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win32-nonfree
-          
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -142,7 +137,6 @@ jobs:
             Using ffmpeg-windows-build-helpers git-${{ needs.build.outputs.helper-git-sha }}
           files: |
             ffmpeg-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win64-nonfree.zip
-            ffmpeg-${{ needs.build.outputs.git-sha }}-${{ needs.build.outputs.helper-git-sha }}-win32-nonfree.zip
 
   delete_old:
     name: Delete older pre-releases
