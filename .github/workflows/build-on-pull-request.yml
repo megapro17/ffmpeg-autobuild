@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: github.actor == 'dependabot[bot]' || github.actor == 'AnimMouse'
+    if: github.actor == 'dependabot[bot]' || github.actor == 'megapro17'
     strategy:
       matrix:
         os: [win64]
