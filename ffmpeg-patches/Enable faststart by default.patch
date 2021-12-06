@@ -1,22 +1,40 @@
-From 017150b21b3b161f2289a733cc997f0eb1b99053 Mon Sep 17 00:00:00 2001
+From 4d293d4099f21705344c464a95da71c539e9785d Mon Sep 17 00:00:00 2001
 From: megapro17 <megapro17@gmail.com>
-Date: Wed, 1 Dec 2021 22:13:53 +0300
+Date: Mon, 6 Dec 2021 22:56:46 +0300
 Subject: [PATCH] Enable faststart by default
 
 ---
- libavformat/movenc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ libavformat/movenc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/libavformat/movenc.c b/libavformat/movenc.c
-index 38ff90833a62..e680890ed9f1 100644
+index 38ff90833a62..4637017a38f5 100644
 --- a/libavformat/movenc.c
 +++ b/libavformat/movenc.c
-@@ -71,7 +71,7 @@ static const AVOption options[] = {
-     { "separate_moof", "Write separate moof/mdat atoms for each track", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_SEPARATE_MOOF}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-     { "frag_custom", "Flush fragments on caller requests", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_FRAG_CUSTOM}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-     { "isml", "Create a live smooth streaming feed (for pushing to a publishing point)", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_ISML}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
--    { "faststart", "Run a second pass to put the index (moov atom) at the beginning of the file", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_FASTSTART}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-+    { "faststart", "Run a second pass to put the index (moov atom) at the beginning of the file", 0, AV_OPT_TYPE_CONST, {.i64 = 1}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-     { "omit_tfhd_offset", "Omit the base data offset in tfhd atoms", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_OMIT_TFHD_OFFSET}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-     { "disable_chpl", "Disable Nero chapter atom", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_DISABLE_CHPL}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
-     { "default_base_moof", "Set the default-base-is-moof flag in tfhd atoms", 0, AV_OPT_TYPE_CONST, {.i64 = FF_MOV_FLAG_DEFAULT_BASE_MOOF}, INT_MIN, INT_MAX, AV_OPT_FLAG_ENCODING_PARAM, "movflags" },
+@@ -6615,7 +6615,7 @@ static int mov_init(AVFormatContext *s)
+         mov->flags &= ~FF_MOV_FLAG_SKIP_SIDX;
+     }
+ 
+-    if (mov->flags & FF_MOV_FLAG_FASTSTART) {
++    if (true) {
+         mov->reserved_moov_size = -1;
+     }
+ 
+@@ -7015,7 +7015,7 @@ static int mov_write_header(AVFormatContext *s)
+             !mov->max_fragment_duration && !mov->max_fragment_size)
+             mov->flags |= FF_MOV_FLAG_FRAG_KEYFRAME;
+     } else {
+-        if (mov->flags & FF_MOV_FLAG_FASTSTART)
++        if (true)
+             mov->reserved_header_pos = avio_tell(pb);
+         mov_write_mdat_tag(pb, mov);
+     }
+@@ -7286,7 +7286,7 @@ static int mov_write_trailer(AVFormatContext *s)
+         }
+         avio_seek(pb, mov->reserved_moov_size > 0 ? mov->reserved_header_pos : moov_pos, SEEK_SET);
+ 
+-        if (mov->flags & FF_MOV_FLAG_FASTSTART) {
++        if (true) {
+             av_log(s, AV_LOG_INFO, "Starting second pass: moving the moov atom to the beginning of the file\n");
+             res = shift_data(s);
+             if (res < 0)
