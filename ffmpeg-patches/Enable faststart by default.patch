@@ -16,7 +16,7 @@ index 38ff90833a62..4637017a38f5 100644
      }
  
 -    if (mov->flags & FF_MOV_FLAG_FASTSTART) {
-+    if (true) {
++    if (1) {
          mov->reserved_moov_size = -1;
      }
  
@@ -25,7 +25,7 @@ index 38ff90833a62..4637017a38f5 100644
              mov->flags |= FF_MOV_FLAG_FRAG_KEYFRAME;
      } else {
 -        if (mov->flags & FF_MOV_FLAG_FASTSTART)
-+        if (true)
++        if (1)
              mov->reserved_header_pos = avio_tell(pb);
          mov_write_mdat_tag(pb, mov);
      }
@@ -34,7 +34,7 @@ index 38ff90833a62..4637017a38f5 100644
          avio_seek(pb, mov->reserved_moov_size > 0 ? mov->reserved_header_pos : moov_pos, SEEK_SET);
  
 -        if (mov->flags & FF_MOV_FLAG_FASTSTART) {
-+        if (true) {
++        if (1) {
              av_log(s, AV_LOG_INFO, "Starting second pass: moving the moov atom to the beginning of the file\n");
              res = shift_data(s);
              if (res < 0)
